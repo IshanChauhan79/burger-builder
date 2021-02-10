@@ -81,12 +81,14 @@ class ContactData extends Component{
                 elementConfig:{
                     options:[{value:'fastest',displayValue:'Fastest'},{value:'cheapest',displayValue:'Cheapest'}]
                 },
-                value:'',
-                validation:false
+                value:'fastest',
+                valid:true,
+                validation:{}
             },
 
 
         },
+        formIsValid:false,
         loading:false
     }
 
@@ -142,8 +144,13 @@ class ContactData extends Component{
         updatedFormElement.touched=true;
         updatedFormElement.valid=this.checkValidity(updatedFormElement.value,updatedFormElement.validation);
         updatedOrderForm[inputIdentifier]=updatedFormElement;
+
+        let formIsValid =true;
+        for (let inputIdentifiers in updatedOrderForm){
+            formIsValid=updatedOrderForm[inputIdentifiers].valid && formIsValid;
+        }
         // console.log(updatedFormElement);
-        this.setState({orderForm:updatedOrderForm})
+        this.setState({orderForm:updatedOrderForm,formIsValid:formIsValid})
 
     }
 
@@ -172,7 +179,7 @@ class ContactData extends Component{
                 {/* <Input elementType='...' elemetConfig='...' value=''/> */}
                 {/* <Input  inputtype='input' type='text' label='Name'  name="name" placeholder="Your Name" /> */}
                 
-                <Button btnType="Success">ORDER</Button>
+                <Button btnType="Success" disabled={!this.state.formIsValid}>ORDER</Button>
             </form>);
         if (this.state.loading){
             form=<Spinner />
