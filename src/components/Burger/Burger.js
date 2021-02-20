@@ -5,7 +5,6 @@ import BurgerIngredient from './BurgerIngredients/BurgerIngredients'
 
 
 const Burger =(props)=> {
-
     let transformedIngredients=Object.keys(props.ingredients)//create an array of ingredients
         .map(igKey=>{
             return [...Array(props.ingredients[igKey])] //create an array acc to ingredients value then spread them ,(only purpose is to loop that many times)
